@@ -5,11 +5,12 @@
    $array_field_type = $mycrud->change_field_type;
 
    ?>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
-<!-- Latest compiled and minified JavaScript -->
-<!--<script src="<?=base_url()?>assets/mycrud/js/bootstrap.min.js"></script>-->
+
+   <?php if($mycrud->no_load_asset_css == false) {?>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
+   <?php } ?>
+
 <?php if(count($mycrud->text_editor) > 0) { ?>
 <script type="text/javascript" src="<?=base_url() ?>assets/mycrud/ckeditor/ckeditor.js"></script>
 <?php } ?>
@@ -81,31 +82,31 @@
                                        }
                                        elseif(array_key_exists($fields, $mycrud->set_relation_nn))
                                        {
-                                       	$options = explode(",",$mycrud->set_relation_nn[$fields]);
+                                       	$options = $mycrud->set_relation_nn[$fields];
                                        echo $mycrud->set_relation_nn_read($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$detail['id']);
                                        }
                                        elseif(array_key_exists($fields, $mycrud->set_relation))
                                        {
-                                       	if(count($mycrud->set_relation[$fields]) > 1)
+                                       	if(count($mycrud->set_relation[$fields]) > 2)
                                        	{
-                                       $options = explode(",",$mycrud->set_relation[$fields][0]);
-                                       $where = explode("=",$mycrud->set_relation[$fields][1]);
+                                       $options = $mycrud->set_relation[$fields];
+                                       $where = explode("=",$mycrud->set_relation[$fields][2]);
                                        }
                                        	else
                                        	{
-                                       $options = explode(",",$mycrud->set_relation[$fields][0]);
+                                       $options = $mycrud->set_relation[$fields];
                                        $where = array();
                                        }
                                        echo $mycrud->set_relation_read($fields,$options[0],$options[1],$where,$detail[$fields]);
                                        }
                                        elseif(array_key_exists($fields, $mycrud->set_upload_image))
                                        {
-                                       $options = explode(",",$mycrud->set_upload_image[$fields]);
+                                       $options = $mycrud->set_upload_image[$fields];
                                        echo $mycrud->set_upload_image_read($fields,$options[0],$options[1],$options[2],$detail[$fields]);
                                        }
                                        elseif(array_key_exists($fields, $mycrud->set_upload_file))
                                        {
-                                       $options = explode(",",$mycrud->set_upload_file[$fields]);
+                                       $options = $mycrud->set_upload_file[$fields];
                                        echo $mycrud->set_upload_file_read($fields,$options[0],$options[1],$options[2],$detail[$fields]);
                                        }
                                        else
@@ -162,26 +163,26 @@
                                        }
                                        elseif(array_key_exists($fields->Field, $mycrud->set_relation))
                                        {
-                                       	if(count($mycrud->set_relation[$fields->Field]) > 1)
+                                       	if(count($mycrud->set_relation[$fields->Field]) > 2)
                                        	{
-                                       $options = explode(",",$mycrud->set_relation[$fields->Field][0]);
-                                       $where = explode("=",$mycrud->set_relation[$fields->Field][1]);
+                                       $options = $mycrud->set_relation[$fields->Field];
+                                       $where = explode("=",$mycrud->set_relation[$fields->Field][2]);
                                        }
                                        	else
                                        	{
-                                       $options = explode(",",$mycrud->set_relation[$fields->Field][0]);
+                                       $options = $mycrud->set_relation[$fields->Field];
                                        $where = array();
                                        }
                                        echo $mycrud->set_relation_read($fields->Field,$options[0],$options[1],$where,$detail[$fields->Field]);
                                        }
                                        elseif(array_key_exists($fields->Field, $mycrud->set_upload_image))
                                        {
-                                       $options = explode(",",$mycrud->set_upload_image[$fields->Field]);
+                                       $options = $mycrud->set_upload_image[$fields->Field];
                                        echo $mycrud->set_upload_image_read($fields->Field,$options[0],$options[1],$options[2],$detail[$fields->Field]);
                                        }
                                        elseif(array_key_exists($fields->Field, $mycrud->set_upload_file))
                                        {
-                                       $options = explode(",",$mycrud->set_upload_file[$fields->Field]);
+                                       $options = $mycrud->set_upload_file[$fields->Field];
                                        echo $mycrud->set_upload_file_read($fields->Field,$options[0],$options[1],$options[2],$detail[$fields->Field]);
                                        }
                                        else
@@ -197,7 +198,7 @@
                                  endforeach; ?>
                               <?php if(count($mycrud->set_relation_nn) > 0) {
                                  foreach($mycrud->set_relation_nn as $key=>$val) :
-                                 $options = explode(",",$val);
+                                 $options = $val;
                                  ?>
                               <tr>
                                  <td><strong><?=ucfirst($key)?></strong></td>
@@ -218,6 +219,10 @@
                <a href="?view=list" class="btn btn-primary">Back to List</a>
             </div>
             <!-- /.panel -->
+
+            <div class="clearfix"></div>
+            <hr/>
+
          </div>
          <!-- /.col-lg-12 -->
    </div>
@@ -226,8 +231,11 @@
 </div>
 <!-- /.container-fluid -->
 </div>
+
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
+<?php if($mycrud->no_load_asset_js == false) { ?>
 <script src="<?=base_url()?>assets/mycrud/bootstrap/js/bootstrap.min.js"></script>
+<?php } ?>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
 
 <script type="text/javascript">

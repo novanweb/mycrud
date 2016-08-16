@@ -5,10 +5,12 @@
    $array_field_type = $mycrud->change_field_type;
 
    ?>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="<?=base_url()?>assets/mycrud/bootstrap/js/bootstrap.min.js"></script>
+
+   <?php if($mycrud->no_load_asset_css == false) {?>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
+   <?php } ?>
+
 <?php if(count($mycrud->text_editor) > 0) { ?>
 <script type="text/javascript" src="<?=base_url() ?>assets/mycrud/ckeditor/ckeditor.js"></script>
 <?php } ?>
@@ -57,6 +59,10 @@
                <!-- /.panel-body -->
                <button type="submit" class="btn btn-success" name="mycrud_insert_import" value="ok">Import</button>
                <a href="?view=list" class="btn btn-primary">Back to List</a>
+
+               <div class="clearfix"></div>
+               <hr/>
+
          </div>
          <input type="hidden" name="mycrud_import" value="ok"/>
          </form>
@@ -69,6 +75,9 @@
 <!-- /.container-fluid -->
 </div>
 
+
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
+<?php if($mycrud->no_load_asset_js == false) { ?>
 <script src="<?=base_url()?>assets/mycrud/bootstrap/js/bootstrap.min.js"></script>
+<?php } ?>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>

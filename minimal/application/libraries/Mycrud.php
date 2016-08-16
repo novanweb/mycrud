@@ -28,6 +28,9 @@ class Mycrud extends CI_Controller
 	var $or_where = array();
 	var $items_id = array();
 
+	var $no_load_asset_js = FALSE;
+	var $no_load_asset_css = FALSE;
+
 	var $disable_add = FALSE;
 	var $disable_edit = FALSE;
 	var $disable_read = FALSE;
@@ -249,7 +252,7 @@ class Mycrud extends CI_Controller
 			$this->filter_by = $_GET['filter_by'];
 			if(array_key_exists($_GET['filter_by'],$this->set_relation))
 			{
-				$options = explode(",",$this->set_relation[$this->filter_by][0]);
+				$options = $this->set_relation[$this->filter_by];
 				$query_clause = $options[0].".id = ".$this->table.".".$this->filter_by;
 				$like_clause = $options[0].".".$options[1];
 				$this->db->join($options[0], ''.$query_clause.'','LEFT');
@@ -258,7 +261,7 @@ class Mycrud extends CI_Controller
 			else
 			if(array_key_exists($_GET['filter_by'],$this->set_relation_nn))
 			{
-				$options = explode(",",$this->set_relation_nn[$this->filter_by]);
+				$options = $this->set_relation_nn[$this->filter_by];
 				$array_rel_id = $this->return_array_search_relation_nn($options,$_GET['q']);
 
 				/*
@@ -357,7 +360,7 @@ class Mycrud extends CI_Controller
 			if(array_key_exists($_GET['filter_by'],$this->set_relation))
 			{
 
-				$options = explode(",",$this->set_relation[$this->filter_by][0],$_GET['q']);
+				$options = $this->set_relation[$this->filter_by];
 
 				$query_clause = $options[0].".id = ".$this->table.".".$this->filter_by;
 				$like_clause = $options[0].".".$options[1];
@@ -368,7 +371,7 @@ class Mycrud extends CI_Controller
 			}
 			if(array_key_exists($_GET['filter_by'],$this->set_relation_nn))
 			{
-				$options = explode(",",$this->set_relation_nn[$this->filter_by]);
+				$options = $this->set_relation_nn[$this->filter_by];
 				$array_rel_id = $this->return_array_search_relation_nn($options,$_GET['q']);
 
 				$this->db->where_in('id',$array_rel_id);
@@ -420,7 +423,7 @@ class Mycrud extends CI_Controller
 			if(array_key_exists($_GET['order_by'],$this->set_relation))
 			{
 
-				$options = explode(",",$this->set_relation[$_GET['order_by']][0]);
+				$options = $this->set_relation[$_GET['order_by']];
 				$query_clause = $options[0].".id = ".$this->table.".".$_GET['order_by'];
 				$this->db->join($options[0], ''.$query_clause.'','LEFT');
 
@@ -609,11 +612,11 @@ class Mycrud extends CI_Controller
 						{
 							if(array_key_exists($fields,$this->set_upload_image))
 							{
-								$options = explode(",",$this->set_upload_image[$fields]);
+								$options = $this->set_upload_image[$fields];
 							}
 							else
 							{
-								$options = explode(",",$this->set_upload_file[$fields]);
+								$options = $this->set_upload_file[$fields];
 							}
 
 							$config['upload_path'] = './'.$options[0].'/';
@@ -666,11 +669,11 @@ class Mycrud extends CI_Controller
 				{
 					if(array_key_exists($fields->Field,$this->set_upload_image))
 					{
-						$options = explode(",",$this->set_upload_image[$fields->Field]);
+						$options = $this->set_upload_image[$fields->Field];
 					}
 					else
 					{
-						$options = explode(",",$this->set_upload_file[$fields->Field]);
+						$options = $this->set_upload_file[$fields->Field];
 					}
 
 					$config['upload_path'] = './'.$options[0].'/';
@@ -721,7 +724,7 @@ class Mycrud extends CI_Controller
 		if(count($this->set_relation_nn) > 0)
 		{
 			foreach($this->set_relation_nn as $key => $val):
-				$options = explode(",",$val);
+				$options = $val;
 				$value = $this->input->post($key);
 				$this->set_relation_nn_insert($key,$options[0],$options[1],$options[2],$options[3],$primary_key,$value);
 			endforeach;
@@ -820,11 +823,11 @@ class Mycrud extends CI_Controller
 						{
 							if(array_key_exists($fields,$this->set_upload_image))
 							{
-								$options = explode(",",$this->set_upload_image[$fields]);
+								$options = $this->set_upload_image[$fields];
 							}
 							else
 							{
-								$options = explode(",",$this->set_upload_file[$fields]);
+								$options = $this->set_upload_file[$fields];
 							}
 
 							$config['upload_path'] = './'.$options[0].'/';
@@ -876,11 +879,11 @@ class Mycrud extends CI_Controller
 					{
 						if(array_key_exists($fields->Field,$this->set_upload_image))
 						{
-							$options = explode(",",$this->set_upload_image[$fields->Field]);
+							$options = $this->set_upload_image[$fields->Field];
 						}
 						else
 						{
-							$options = explode(",",$this->set_upload_file[$fields->Field]);
+							$options = $this->set_upload_file[$fields->Field];
 						}
 
 						$config['upload_path'] = './'.$options[0].'/';
@@ -926,7 +929,7 @@ class Mycrud extends CI_Controller
 		if(count($this->set_relation_nn) > 0)
 		{
 			foreach($this->set_relation_nn as $key => $val):
-				$options = explode(",",$val);
+				$options = $val;
 				$value = $this->input->post($key);
 				$this->set_relation_nn_update($key,$options[0],$options[1],$options[2],$options[3],$primary_key,$value);
 			endforeach;
@@ -1462,12 +1465,12 @@ class Mycrud extends CI_Controller
 				 	{
 				 		if(array_key_exists($fields,$this->set_relation))
 				 		{
-				 			$options = explode(",",$this->set_relation[$fields][0]);
+				 			$options = $this->set_relation[$fields];
 							$value = $this->set_relation_column($fields,$options[0],$options[1],$row[$fields]);
 						}
 						elseif(array_key_exists($fields,$this->set_relation_nn))
 						{
-							$options = explode(",",$this->set_relation_nn[$fields]);
+							$options = $this->set_relation_nn[$fields];
 							$value = $this->set_relation_nn_column($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 						}
 						else
@@ -1497,12 +1500,12 @@ class Mycrud extends CI_Controller
 
 	    					if(array_key_exists($fields->Field,$this->set_relation))
 					 		{
-					 			$options = explode(",",$this->set_relation[$fields->Field][0]);
+					 			$options = $this->set_relation[$fields->Field];
 								$value = $this->set_relation_column($fields->Field,$options[0],$options[1],$row[$fields->Field]);
 							}
 							elseif(array_key_exists($fields->Field,$this->set_relation_nn))
 							{
-								$options = explode(",",$this->set_relation_nn[$fields->Field]);
+								$options = $this->set_relation_nn[$fields->Field];
 								$value = $this->set_relation_nn_column($fields->Field,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 							}
 							else
@@ -1634,12 +1637,12 @@ class Mycrud extends CI_Controller
 				 	{
 				 		if(array_key_exists($fields,$this->set_relation))
 				 		{
-				 			$options = explode(",",$this->set_relation[$fields][0]);
+				 			$options = $this->set_relation[$fields];
 							$value = $this->set_relation_column($fields,$options[0],$options[1],$row[$fields]);
 						}
 						elseif(array_key_exists($fields,$this->set_relation_nn))
 						{
-							$options = explode(",",$this->set_relation_nn[$fields]);
+							$options = $this->set_relation_nn[$fields];
 							$value = $this->set_relation_nn_column($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 						}
 						else
@@ -1669,12 +1672,12 @@ class Mycrud extends CI_Controller
 
 	    					if(array_key_exists($fields->Field,$this->set_relation))
 					 		{
-					 			$options = explode(",",$this->set_relation[$fields->Field][0]);
+					 			$options = $this->set_relation[$fields->Field];
 								$value = $this->set_relation_column($fields->Field,$options[0],$options[1],$row[$fields->Field]);
 							}
 							elseif(array_key_exists($fields->Field,$this->set_relation_nn))
 							{
-								$options = explode(",",$this->set_relation_nn[$fields->Field]);
+								$options = $this->set_relation_nn[$fields->Field];
 								$value = $this->set_relation_nn_column($fields->Field,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 							}
 							else
@@ -1803,12 +1806,12 @@ class Mycrud extends CI_Controller
 				 	{
 				 		if(array_key_exists($fields,$this->set_relation))
 				 		{
-				 			$options = explode(",",$this->set_relation[$fields][0]);
+				 			$options = $this->set_relation[$fields];
 							$value = $this->set_relation_column($fields,$options[0],$options[1],$row[$fields]);
 						}
 						elseif(array_key_exists($fields,$this->set_relation_nn))
 						{
-							$options = explode(",",$this->set_relation_nn[$fields]);
+							$options = $this->set_relation_nn[$fields];
 							$value = $this->set_relation_nn_column($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 						}
 						else
@@ -1838,12 +1841,12 @@ class Mycrud extends CI_Controller
 
 	    					if(array_key_exists($fields->Field,$this->set_relation))
 					 		{
-					 			$options = explode(",",$this->set_relation[$fields->Field][0]);
+					 			$options = $this->set_relation[$fields->Field];
 								$value = $this->set_relation_column($fields->Field,$options[0],$options[1],$row[$fields->Field]);
 							}
 							elseif(array_key_exists($fields->Field,$this->set_relation_nn))
 							{
-								$options = explode(",",$this->set_relation_nn[$fields->Field]);
+								$options = $this->set_relation_nn[$fields->Field];
 								$value = $this->set_relation_nn_column($fields->Field,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']);
 							}
 							else

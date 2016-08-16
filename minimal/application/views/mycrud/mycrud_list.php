@@ -19,10 +19,12 @@
 
    endforeach;
    ?>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<!--<script src="<?=base_url()?>assets/mycrud/js/bootstrap.min.js"></script>-->
+
+   <?php if($mycrud->no_load_asset_css == false) {?>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
+   <?php } ?>
+
 <style>
    .table td , .table th {
    font-size: 12px;
@@ -208,19 +210,19 @@
                                  <td><?=$val[0]->$val[1]($row['id'],null) ?></td>
                                  <?php } ?>
                                  <?php } else if(array_key_exists($fields,$mycrud->set_upload_image)) {
-                                    $options = explode(",",$mycrud->set_upload_image[$fields]);
+                                    $options = $mycrud->set_upload_image[$fields];
                                     ?>
                                  <td><img src="<?=base_url().$options[0]?>/<?=$row[$fields]?>" width="50" /></td>
                                  <?php } else if(array_key_exists($fields,$mycrud->set_upload_file)) {
-                                    $options = explode(",",$mycrud->set_upload_file[$fields]);
+                                    $options = $mycrud->set_upload_file[$fields];
                                     ?>
                                  <td><a href="<?=base_url().$options[0]?>/<?=$row[$fields]?>" target="_blank" /><?=$row[$fields]?> </a></td>
                                  <?php } else if(array_key_exists($fields,$mycrud->set_relation)){
-                                    $options = explode(",",$mycrud->set_relation[$fields][0]);
+                                    $options = $mycrud->set_relation[$fields];
                                     ?>
                                  <td><?=$mycrud->set_relation_column($fields,$options[0],$options[1],$row[$fields]) ?></td>
                                  <?php } else if(array_key_exists($fields,$mycrud->set_relation_nn)){
-                                    $options = explode(",",$mycrud->set_relation_nn[$fields]);
+                                    $options = $mycrud->set_relation_nn[$fields];
                                     ?>
                                  <td><?=$mycrud->set_relation_nn_column($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']) ?></td>
                                  <?php } else { ?>
@@ -261,15 +263,15 @@
                                  <td><?=$val[0]->$val[1]($row['id'],null) ?></td>
                                  <?php } ?>
                                  <?php } else if(array_key_exists($fields->Field,$mycrud->set_upload_image)) {
-                                    $options = explode(",",$mycrud->set_upload_image[$fields->Field]);
+                                    $options = $mycrud->set_upload_image[$fields->Field];
                                     ?>
                                  <td><img src="<?=base_url().$options[0]?>/<?=$row[$fields->Field]?>" width="50" /></td>
                                  <?php } else if(array_key_exists($fields->Field,$mycrud->set_upload_file)) {
-                                    $options = explode(",",$mycrud->set_upload_file[$fields->Field]);
+                                    $options = $mycrud->set_upload_file[$fields->Field];
                                     ?>
-                                 <td><a href="<?=base_url().$options[0]?>/<?=$row[$fields->Field]?>" target="_blank" /><?=$row[$fields]?> </a></td>
+                                 <td><a href="<?=base_url().$options[0]?>/<?=$row[$fields->Field]?>" target="_blank" /><?=$row[$fields->Field]?> </a></td>
                                  <?php } else if(array_key_exists($fields->Field,$mycrud->set_relation)){
-                                    $options = explode(",",$mycrud->set_relation[$fields->Field][0]);
+                                    $options = $mycrud->set_relation[$fields->Field];
                                     ?>
                                  <td><?=$mycrud->set_relation_column($fields->Field,$options[0],$options[1],$row[$fields->Field]) ?></td>
                                  <?php } else { ?>
@@ -290,7 +292,7 @@
                                  <?php endforeach; ?>
                                  <?php if(count($mycrud->set_relation_nn) > 0){
                                     foreach($mycrud->set_relation_nn as $key => $val):
-                                                   				$options = explode(",",$val);
+                                                   				$options = $val;
                                                    			?>
                                  <td><?=$mycrud->set_relation_nn_column($key,$options[0],$options[1],$options[2],$options[3],$options[4],$row['id']) ?></td>
                                  <?php endforeach; ?>
@@ -342,8 +344,11 @@
    </div>
    <!-- /.container-fluid -->
 </div>
+
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
+<?php if($mycrud->no_load_asset_js == false) { ?>
 <script src="<?=base_url()?>assets/mycrud/bootstrap/js/bootstrap.min.js"></script>
+<?php } ?>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
 
 <script type="text/javascript">
