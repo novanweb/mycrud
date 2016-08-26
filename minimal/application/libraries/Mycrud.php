@@ -37,6 +37,7 @@ class Mycrud extends CI_Controller
 	var $disable_delete = FALSE;
 	var $disable_export = FALSE;
 	var $disable_print = FALSE;
+	var $add_action = array();
 
 	var $callback_columns = array();
 	var $callback_fields = array();
@@ -55,10 +56,16 @@ class Mycrud extends CI_Controller
 	var $set_upload_file = array();
 	var $set_upload_image = array();
 	var $set_relation = array();
+	var $set_parent_dropdown = array();
+	var $set_child_dropdown = array();
 	var $set_relation_nn = array();
 	var $validation = array();
+
+	var $attribute = array();
+
 	var $myconfig = array();
 	var $base_url = '';
+	var $mycrud_controller = 'mycrud';
 
 	var $notification = null;
 
@@ -184,6 +191,11 @@ class Mycrud extends CI_Controller
 					}
 				}
 				$this->view_import();
+			}
+			elseif($_GET['view'] == 'ajax')
+			{
+				$data['status'] = 'ok';
+				echo json_encode($data);
 			}
 
 		}
@@ -1172,6 +1184,80 @@ class Mycrud extends CI_Controller
 
 		endforeach;
 		$data_return .= "</select>";
+
+		return $data_return;
+	}
+
+	function set_relation_field_parent($field_name,$rel_table,$rel_label_field,$where = array(),$p_options = array(),$child = array(), $value = null)
+	{
+		// Get all data
+		if(count($where) > 0)
+		{
+			$this->db->where($where[0],$where[1]);
+		}
+
+		$rel_data = $this->db->get($rel_table);
+
+		$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='parent_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";
+		foreach($rel_data->result() as $rel_data_list):
+
+			if($rel_data_list->id == $value)
+			{
+				$data_return .= "<option value='".$rel_data_list->id."' selected='selected'>".$rel_data_list->$rel_label_field."</option>";
+			}
+			else
+			{
+				$data_return .= "<option value='".$rel_data_list->id."'>".$rel_data_list->$rel_label_field."</option>";
+			}
+
+		endforeach;
+		$data_return .= "</select>";
+		$data_return .= "<script type='text/javascript'>
+												$('#parent_".$field_name."').change(function(){
+
+													var this_val = $(this).val();
+													$('#child_".$p_options[0]."').html('<option>Loading</option>');
+
+													$.post('".base_url().$this->mycrud_controller."/ajax_get_dropdown_child/".$child[0]."/".$p_options[1]."/'+this_val,
+													function(result){
+														if(result.status == 'success')
+														{
+															$('#child_".$p_options[0]."').html('');
+															for(var i=0;i<result.data.length;i++)
+															{
+																$('#child_".$p_options[0]."').append('<option value='+result.data[i].id+'>'+result.data[i].".$child[1]."+'</option>');
+															}
+															$('#child_".$p_options[0]."').removeAttr('disabled');
+														}
+														else
+														{
+															$('#child_".$p_options[0]."').html('<option>- Not found -</option>');
+															$('#child_".$p_options[0]."').attr('disabled','disabled');
+														}
+													},'json');
+												});
+											</script>
+												";
+		return $data_return;
+	}
+
+	function set_relation_field_child($field_name,$rel_table,$rel_label_field,$where = array(),$value = null)
+	{
+
+		if($value != null)
+		{
+			$this->db->where('id',$value);
+			$query = $this->db->get($rel_table)->row_array();
+			$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='child_".$field_name."'>";
+			$data_return .= "<option value='".$value."' selected='selected'>".$query[$rel_label_field]."</option>";
+		}
+		else {
+			$data_return = "<select name='".$field_name."' class='form-control  input-sm' disabled='disabled' id='child_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";
+		}
+
+		$data_return .= "</select>";
+
+
 
 		return $data_return;
 	}

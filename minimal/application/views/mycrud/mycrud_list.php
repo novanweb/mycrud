@@ -124,18 +124,17 @@
                                  <?php if(count($mycrud->columns) > 0) { ?>
                                  <?php
                                     $i = 1;
-                                                    		foreach($mycrud->columns as $fields):
-
-                                                    		?>
+                                        foreach($mycrud->columns as $fields):
+                                      ?>
                                  <th>
                                     <?php if(!in_array($fields,$mycrud->disable_columns)) { ?>
                                     <?php if((isset($_GET['order_by'])) and (isset($_GET['sort']))) {
                                        if(($_GET['order_by'] == $fields) and ($_GET['sort'] == 'asc')) { ?>
-                                    <a href="?view=list&order_by=<?=$fields?>&sort=desc"><?=$mycrud->display_alias($fields) ?></a>
+                                        <a href="?view=list&order_by=<?=$fields?>&sort=desc"><?=$mycrud->display_alias($fields) ?></a>
                                     <?php } else { ?>
-                                    <a href="?view=list&order_by=<?=$fields?>&sort=asc"><?=$mycrud->display_alias($fields) ?></a>
+                                        <a href="?view=list&order_by=<?=$fields?>&sort=asc"><?=$mycrud->display_alias($fields) ?></a>
                                     <?php } } else { ?>
-                                    <a href="?view=list&order_by=<?=$fields?>&sort=asc"><?=$mycrud->display_alias($fields) ?></a>
+                                        <a href="?view=list&order_by=<?=$fields?>&sort=asc"><?=$mycrud->display_alias($fields) ?></a>
                                     <?php } ?>
                                     <?php } ?>
                                  </th>
@@ -189,7 +188,7 @@
                                  <?php endforeach; ?>
                                  <?php } ?>
                                  <?php } ?>
-                                 <th style="text-align:center" width="150px">Action</th>
+                                 <th style="text-align:center" <?php if(count($this->add_action) == 0) { ?> width="150px" <?php } ?>>Action</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -313,6 +312,20 @@
                                     <?php } ?>
                                     <?php if($this->disable_delete != true){ ?>
                                     <a href="?view=list&act=delete&id=<?=$row['id'] ?>" class="btn btn-danger btn-xs mycrud_delete" title="Delete Data" name="mycrud_delete" value="ok"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                                    <?php } ?>
+                                    <?php if(count($this->add_action) > 0 ) { ?>
+                                      <?php foreach($this->add_action as $name_action => $value): ?>
+
+                                        <a href="<?=base_url()?><?=$value[0]?>/<?=$row['id'] ?>" title="<?=$name_action?>" class="<?=$value[1]?>">
+                                          <?php
+                                          if(count($value) == 3)
+                                            {
+                                              echo $value[2];
+                                            } else {
+                                              echo $name_action;
+                                          } ?>
+                                        </a>
+                                      <?php endforeach; ?>
                                     <?php } ?>
                                  </td>
                               </tr>
