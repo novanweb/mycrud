@@ -3,7 +3,7 @@
 
 MYCRUD LIBRARY
 Author : Novan Bagus
-Version : 1.x.x
+Version : 1.0
 Website : http://novanbagus.com/mycrud
 
 */
@@ -643,12 +643,14 @@ class Mycrud extends CI_Controller
 							{
 								$error = $this->upload->display_errors();
 
-								if($error == 'You did not select a file to upload.')
+								$error_replace_space = strip_tags(str_replace(' ','',$error));
+								if($error_replace_space == 'Youdidnotselectafiletoupload.')
 								{
 									$data_insert[$fields] = '';
 								}
 								else
 								{
+
 									print($error);
 									exit;
 								}
@@ -699,10 +701,10 @@ class Mycrud extends CI_Controller
 					if ( ! $this->upload->do_upload($fields->Field))
 					{
 						$error = $this->upload->display_errors();
-
-						if($error == 'You did not select a file to upload.')
+						$error_replace_space = strip_tags(str_replace(' ','',$error));
+						if($error_replace_space == 'Youdidnotselectafiletoupload.')
 						{
-							$data_insert[$fields] = '';
+							$data_insert[$fields->Field] = '';
 						}
 						else
 						{
@@ -737,8 +739,12 @@ class Mycrud extends CI_Controller
 		{
 			foreach($this->set_relation_nn as $key => $val):
 				$options = $val;
-				$value = $this->input->post($key);
-				$this->set_relation_nn_insert($key,$options[0],$options[1],$options[2],$options[3],$primary_key,$value);
+
+				if($this->input->post($key))
+				{
+					$value = $this->input->post($key);
+					$this->set_relation_nn_insert($key,$options[0],$options[1],$options[2],$options[3],$primary_key,$value);
+				}
 			endforeach;
 		}
 
@@ -942,8 +948,10 @@ class Mycrud extends CI_Controller
 		{
 			foreach($this->set_relation_nn as $key => $val):
 				$options = $val;
+
 				$value = $this->input->post($key);
 				$this->set_relation_nn_update($key,$options[0],$options[1],$options[2],$options[3],$primary_key,$value);
+
 			endforeach;
 		}
 
@@ -1005,8 +1013,6 @@ class Mycrud extends CI_Controller
 		endforeach;
 	}
 
-
-
 	function define_field($field_name,$type,$value = null)
 	{
 		// Split Data Type Format
@@ -1064,7 +1070,7 @@ class Mycrud extends CI_Controller
 		}
 		else
 		{
-			$data_return = "<textarea class='form-control input-sm' name='".$field_name."'>".$value."</textarea>";
+			$data_return = "<input type='text' class='form-control  input-sm' name='".$field_name."' value='".$value."' />";
 		}
 
 		return $data_return;
@@ -1243,20 +1249,13 @@ class Mycrud extends CI_Controller
 
 	function set_relation_field_child($field_name,$rel_table,$rel_label_field,$where = array(),$value = null)
 	{
+
 		if($value != null)
 		{
 			$this->db->where('id',$value);
-			$query = $this->db->get($rel_table);
-
-			if($query->num_rows() != 0)
-			{
-				$query = $query->row_array();
-				$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='child_".$field_name."'>";
-				$data_return .= "<option value='".$value."' selected='selected'>".$query[$rel_label_field]."</option>";
-			}
-			else {
-				$data_return = "<select name='".$field_name."' class='form-control  input-sm' disabled='disabled' id='child_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";
-			}
+			$query = $this->db->get($rel_table)->row_array();
+			$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='child_".$field_name."'>";
+			$data_return .= "<option value='".$value."' selected='selected'>".$query[$rel_label_field]."</option>";
 		}
 		else {
 			$data_return = "<select name='".$field_name."' class='form-control  input-sm' disabled='disabled' id='child_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";
@@ -1269,8 +1268,12 @@ class Mycrud extends CI_Controller
 		return $data_return;
 	}
 
-	function set_relation_nn_field($field_name,$rel_table,$join_table,$rel_id,$join_id,$join_label,$value = null)
+	function set_relation_nn_field($field_name,$rel_table,$join_table,$rel_id,$join_id,$join_label,$where = array(),$value = null)
 	{
+		if(count($where) > 0)
+		{
+			$this->db->where($where[0],$where[1]);
+		}
 		$data_join = $this->db->get($join_table);
 
 		$data_return = "<select name='".$field_name."[]' class='form-control input-sm' multiple>";

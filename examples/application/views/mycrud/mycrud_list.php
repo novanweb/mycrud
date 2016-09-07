@@ -43,11 +43,8 @@
    }
    }
 </style>
-<div id="page-wrapper" >
-   <div id="mycrud-list" class="container-fluid">
-      <div class="row">
-         <div class="col-lg-12">
-            <div class="panel panel-default">
+
+            <div class="panel panel-default" id="mycrud-list">
                <div class="panel-body">
                   <div class="row">
                      <div class="col-md-6">
@@ -104,7 +101,9 @@
                                  <li><a href="<?=current_url() ?>?view=list&act=export_excel_all"  ><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Export All Data</a></li>
                                  <li><a href="<?=current_url() ?>?view=import"  ><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Import Data</a></li>
                                  <li><a href="#"  onclick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</a></li>
+                                 <?php if($this->disable_delete != true){ ?>
                                  <li><a href="#" id="mycrud_delete_items"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Item (s)</a></li>
+                                 <?php } ?>
                               </ul>
                            </div>
                         </div>
@@ -350,13 +349,7 @@
             </div>
             <div class="clearfix"></div>
             <hr/>
-         </div>
-         <!-- /.col-lg-12 -->
-      </div>
-      <!-- /.row -->
-   </div>
-   <!-- /.container-fluid -->
-</div>
+
 
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <?php if($mycrud->no_load_asset_js == false) { ?>

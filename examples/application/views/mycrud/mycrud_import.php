@@ -20,10 +20,7 @@
    }
 </style>
 <!-- Page Content -->
-<div id="page-wrapper">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-lg-12">
+
             <form action="?view=import&act=upload" method="post" enctype="multipart/form-data">
                <div class="panel panel-default">
                   <div class="panel-heading">
@@ -67,14 +64,7 @@
          <input type="hidden" name="mycrud_import" value="ok"/>
          </form>
          <!-- /.panel -->
-      </div>
-      <!-- /.col-lg-12 -->
-   </div>
-   <!-- /.row -->
-</div>
-<!-- /.container-fluid -->
-</div>
-
+  
 
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <?php if($mycrud->no_load_asset_js == false) { ?>

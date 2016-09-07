@@ -21,11 +21,9 @@
    }
 </style>
 <!-- Page Content -->
-<div id="page-wrapper">
-   <div class="container-fluid">
+
       <form action="?view=edit&act=update&id=<?=$mycrud->id ?>" method="post" enctype="multipart/form-data">
-         <div class="row">
-            <div class="col-lg-12">
+
                <div class="panel panel-default">
                   <div class="panel-heading">
                      <h4>Edit - <?=$mycrud->subject ?></h4>
@@ -97,7 +95,7 @@
                                        elseif(array_key_exists($fields, $mycrud->set_relation_nn))
                                        {
                                        	$options = $mycrud->set_relation_nn[$fields];
-                                       echo $mycrud->set_relation_nn_field($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$detail['id']);
+                                       echo $mycrud->set_relation_nn_field($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$options[5],$detail['id']);
                                        }
                                        elseif(array_key_exists($fields, $mycrud->set_relation))
                                        {
@@ -308,7 +306,7 @@
                               <tr>
                                  <td><strong><?=ucfirst($key)?></strong></td>
                                  <td>: </td>
-                                 <td><?=$mycrud->set_relation_nn_field($key,$options[0],$options[1],$options[2],$options[3],$options[4],$detail['id']); ?></td>
+                                 <td><?=$mycrud->set_relation_nn_field($key,$options[0],$options[1],$options[2],$options[3],$options[4],$options[5],$detail['id']); ?></td>
                               </tr>
                               <?php
                                  endforeach;
@@ -328,14 +326,8 @@
             <div class="clearfix"></div>
             <hr/>
 
-         </div>
-         <!-- /.col-lg-12 -->
-   </div>
    </form>
-   <!-- /.row -->
-</div>
-<!-- /.container-fluid -->
-</div>
+
 
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <?php if($mycrud->no_load_asset_js == false) { ?>
