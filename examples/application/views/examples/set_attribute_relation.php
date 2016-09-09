@@ -30,10 +30,19 @@
 
           $config['table'] = 'product';
           $config['subject'] = 'Product';
+          $config['fields'] = array('category_id','subcategory_id');
           $config['set_relation'] = array(
                                   'category_id' => array('category','name'),
                                   'subcategory_id' => array('subcategory','name'));
-          $config['set_relation_by_parent'] = array('subcategory_id' => array('category_id','category_id'));
+          $config['set_parent_dropdown'] = array('category_id' => array('subcategory_id','category_id'));
+
+          $config['attribute'][0] = array(
+                                      'foreign_key' => 'prod_id',
+                                      'table' => 'images',
+                                      'subject' => 'Photo',
+
+                                      'set_upload_image' => array('image','media/images','jpg|png|JPG|PNG')
+                                    );
 
           $mycrud = new Mycrud();
           $mycrud->initialize($config);
@@ -60,7 +69,7 @@
                                     'foreign_key' => 'prod_id',
                                     'table' => 'images',
                                     'subject' => 'Photo',
-                                  
+
                                     'set_upload_image' => array('image','media/images','jpg|png|JPG|PNG')
                                   );
 
