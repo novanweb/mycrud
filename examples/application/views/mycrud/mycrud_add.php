@@ -7,8 +7,8 @@
 
    <?php if($mycrud->no_load_asset_css == false) {?>
    <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
-   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
    <?php } ?>
+<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>   
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
 <?php if(count($mycrud->text_editor) > 0) { ?>

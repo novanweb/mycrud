@@ -8,8 +8,8 @@
 
    <?php if($mycrud->no_load_asset_css == false) {?>
    <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
-   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
    <?php } ?>
+   <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
 
 <?php if(count($mycrud->text_editor) > 0) { ?>
 <script type="text/javascript" src="<?=base_url() ?>assets/mycrud/ckeditor/ckeditor.js"></script>
@@ -64,7 +64,7 @@
          <input type="hidden" name="mycrud_import" value="ok"/>
          </form>
          <!-- /.panel -->
-  
+
 
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <?php if($mycrud->no_load_asset_js == false) { ?>
