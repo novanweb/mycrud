@@ -19,7 +19,7 @@
 <h4>Callback</h4>
 <ul class="list-group">
   <li class="list-group-item"><a href="<?=base_url()?>examples/callback_column">Column</a></li>
-  <li class="list-group-item"><a href="<?=base_url()?>examples/callback_field">Field</a></li>
+  <li class="list-group-item"><a href="<?=base_url()?>examples/callback_fields">Field</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/callback_before_insert">Before Insert</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/callback_after_insert">After Insert</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/callback_before_update">Before Update</a></li>

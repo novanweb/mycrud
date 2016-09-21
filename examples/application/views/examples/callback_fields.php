@@ -52,9 +52,9 @@
             $this->load->view('examples',$data);
           }
 
-          function callback_column_function($row_id = null,$value = null)
+          function callback_fields_function($row_id = null,$value = null)
           {
-            echo $row_id.' - '.$value;
+            echo '<input type="text" value="Novan" name="created_by" readonly="readonly" class="form-control">';
           }
 
         </pre>
@@ -67,7 +67,7 @@
         $this->load->library('mycrud');
         $config['table'] = 'report';
         $config['subject'] = 'Report';
-        $config['callback_columns'] = array('created_by' => array($my,'callback_column_function'));
+        $config['callback_fields'] = array('created_by' => array($my,'callback_fields_function'));
 
         $mycrud = new Mycrud();
         $mycrud->initialize($config);

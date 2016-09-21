@@ -88,6 +88,17 @@ class Examples extends CI_Controller
     echo $row_id.' - '.$value;
   }
 
+  function callback_fields()
+  {
+    $data['my'] = $this;
+    $this->load->view('examples/callback_fields',$data);
+  }
+
+  function callback_fields_function($row_id = null,$value = null)
+  {
+    echo '<input type="text" value="Novan" name="created_by" readonly="readonly" class="form-control">';
+  }
+
   function callback_before_insert()
   {
     $data['my'] = $this;
