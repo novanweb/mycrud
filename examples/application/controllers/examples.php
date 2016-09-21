@@ -77,6 +77,43 @@ class Examples extends CI_Controller
     $this->load->view('examples/set_attribute_relation');
   }
 
+  function callback_column()
+  {
+    $data['my'] = $this;
+    $this->load->view('examples/callback_column',$data);
+  }
+
+  function callback_column_function($row_id = null,$value = null)
+  {
+    echo $row_id.' - '.$value;
+  }
+
+  function callback_before_insert()
+  {
+    $data['my'] = $this;
+    $this->load->view('examples/callback_before_insert',$data);
+  }
+
+  function callback_before_insert_function()
+  {
+    $encrypt_name = md5($this->input->post('created_by'));
+    $_POST['created_by'] = $encrypt_name;
+    return true;
+  }
+
+  function callback_after_insert()
+  {
+    $data['my'] = $this;
+    $this->load->view('examples/callback_before_insert',$data);
+  }
+
+  function callback_after_insert_function()
+  {
+    $encrypt_name = md5($this->input->post('created_by'));
+    $_POST['created_by'] = $encrypt_name;
+    return true;
+  }
+
 
 }
 

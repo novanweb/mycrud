@@ -255,7 +255,7 @@
                                  <?php if(array_key_exists($fields->Field,$mycrud->callback_columns)){
                                     $val = $mycrud->callback_columns[$fields->Field];
                                     ?>
-                                 <?php if(in_array($fields,$array_field)) { ?>
+                                 <?php if(in_array($fields->Field,$array_field)) { ?>
                                  <td><?=$val[0]->$val[1]($row['id'],$row[$fields->Field]) ?></td>
                                  <?php } else { ?>
                                  <td><?=$val[0]->$val[1]($row['id'],null) ?></td>
