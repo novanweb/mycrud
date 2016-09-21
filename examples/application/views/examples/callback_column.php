@@ -33,7 +33,7 @@
 
           $config['table'] = 'report';
           $config['subject'] = 'Report';
-          $config['callback_before_insert'] = array($my,'callback_after_insert_function');
+          $config['callback_columns'] = array('created_by' => array($my,'callback_column_function'));
 
           $mycrud = new Mycrud();
           $mycrud->initialize($config);
@@ -52,11 +52,9 @@
             $this->load->view('examples',$data);
           }
 
-          function callback_before_insert_function()
+          function callback_column_function($row_id = null,$value = null)
           {
-            $encrypt_name = md5($this->input->post('created_by'));
-            $_POST['created_by'] = $encrypt_name;
-            return true;
+            echo $row_id.' - '.$value;
           }
 
         </pre>
