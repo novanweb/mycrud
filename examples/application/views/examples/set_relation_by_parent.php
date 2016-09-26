@@ -16,7 +16,7 @@
           <div class="well">
           <pre class="brush: js; first-line: 17">
 
-            $config['set_relation_by_parent'] = array('subcategory_id' => array('category_id','category_id'));
+            $config['set_parent_dropdown'] = array('category_id' => array('subcategory_id','category_id'));
 
           </pre>
           </div>
@@ -34,7 +34,7 @@
                                   'category_id' => array('category','name'),
                                   'subcategory_id' => array('subcategory','name'));
 
-          $config['set_relation_by_parent'] = array('subcategory_id' => array('category_id','category_id'));
+          $config['set_parent_dropdown'] = array('category_id' => array('subcategory_id','category_id'));
 
           $mycrud = new Mycrud();
           $mycrud->initialize($config);

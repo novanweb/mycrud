@@ -94,7 +94,7 @@ class Examples extends CI_Controller
     $this->load->view('examples/callback_fields',$data);
   }
 
-  function callback_fields_function($row_id = null,$value = null)
+  function callback_fields_function($primary_key = null,$value = null)
   {
     echo '<input type="text" value="Novan" name="created_by" readonly="readonly" class="form-control">';
   }

@@ -15,7 +15,7 @@
           <div class="well">
           <pre class="brush: js; first-line: 17">
 
-            $config['callback_before_insert'] = array($my,'callback_after_insert_function');
+            $config['callback_columns'] = array('created_by' => array($my,'callback_column_function'));
 
           </pre>
           </div>

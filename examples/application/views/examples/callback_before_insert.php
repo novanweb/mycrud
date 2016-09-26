@@ -15,7 +15,7 @@
           <div class="well">
           <pre class="brush: js; first-line: 17">
 
-            $config['callback_before_insert'] = array($my,'callback_after_insert_function');
+            $config['callback_before_insert'] = array($my,'callback_before_insert_function');
 
           </pre>
           </div>
@@ -25,7 +25,6 @@
         <div class="well">
         <pre class="brush: js; first-line: 10">
 
-
           // views/example.php
           // Just Put this code into Views file
 
@@ -33,7 +32,7 @@
 
           $config['table'] = 'report';
           $config['subject'] = 'Report';
-          $config['callback_before_insert'] = array($my,'callback_after_insert_function');
+          $config['callback_before_insert'] = array($my,'callback_before_insert_function');
 
           $mycrud = new Mycrud();
           $mycrud->initialize($config);

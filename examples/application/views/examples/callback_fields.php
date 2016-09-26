@@ -15,7 +15,7 @@
           <div class="well">
           <pre class="brush: js; first-line: 17">
 
-            $config['callback_before_insert'] = array($my,'callback_after_insert_function');
+            $config['callback_columns'] = array('created_by' => array($my,'callback_column_function'));
 
           </pre>
           </div>
@@ -52,7 +52,7 @@
             $this->load->view('examples',$data);
           }
 
-          function callback_fields_function($row_id = null,$value = null)
+          function callback_fields_function($primary_key = null,$value = null)
           {
             echo '<input type="text" value="Novan" name="created_by" readonly="readonly" class="form-control">';
           }

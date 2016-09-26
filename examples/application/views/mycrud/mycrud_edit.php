@@ -243,17 +243,54 @@
                                        }
                                        elseif(array_key_exists($fields->Field, $mycrud->set_relation))
                                        {
-                                       	if(count($mycrud->set_relation[$fields->Field]) > 2)
-                                       	{
-                                       $options = $mycrud->set_relation[$fields->Field];
-                                       $where = explode("=",$mycrud->set_relation[$fields->Field][1]);
-                                       }
-                                       	else
-                                       	{
-                                       $options = $mycrud->set_relation[$fields->Field];
-                                       $where = array();
-                                       }
-                                       echo $mycrud->set_relation_field($fields->Field,$options[0],$options[1],$where,$detail[$fields->Field]);
+                                         //check parent, child or no
+                                         if(array_key_exists($fields->Field,$mycrud->set_parent_dropdown)) //parent
+                                         {
+                                           $p_options = $mycrud->set_parent_dropdown[$fields->Field];
+
+                                           if(count($mycrud->set_relation[$fields->Field]) > 2)
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = explode("=",$mycrud->set_relation[$fields->Field][2]);
+                                           }
+                                           else
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = array();
+                                           }
+                                           $child = $mycrud->set_relation[$p_options[0]];
+                                           $mycrud->set_child_dropdown[] = $p_options[0];
+                                           echo $mycrud->set_relation_field_parent($fields->Field,$options[0],$options[1],$where,$p_options,$child,$detail[$fields->Field]);
+                                         }
+                                         else
+                                         if(in_array($fields->Field,$mycrud->set_child_dropdown)) //child
+                                         {
+                                           if(count($mycrud->set_relation[$fields->Field]) > 2)
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = explode("=",$mycrud->set_relation[$fields->Field][2]);
+                                           }
+                                           else
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = array();
+                                           }
+                                           echo $mycrud->set_relation_field_child($fields->Field,$options[0],$options[1],$where,$detail[$fields->Field]);
+                                         }
+                                         else
+                                         { // no
+                                           if(count($mycrud->set_relation[$fields->Field]) > 2)
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = explode("=",$mycrud->set_relation[$fields->Field][2]);
+                                           }
+                                           else
+                                           {
+                                             $options = $mycrud->set_relation[$fields->Field];
+                                             $where = array();
+                                           }
+                                           echo $mycrud->set_relation_field($fields->Field,$options[0],$options[1],$where,$detail[$fields->Field]);
+                                         }
                                        }
                                        elseif(array_key_exists($fields->Field, $mycrud->set_upload_image))
                                        {
