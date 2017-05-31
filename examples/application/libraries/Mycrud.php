@@ -264,6 +264,7 @@ class Mycrud extends CI_Controller
 			$this->filter_by = $_GET['filter_by'];
 			if(array_key_exists($_GET['filter_by'],$this->set_relation))
 			{
+
 				$options = $this->set_relation[$this->filter_by];
 				$query_clause = $options[0].".id = ".$this->table.".".$this->filter_by;
 				$like_clause = $options[0].".".$options[1];
@@ -275,31 +276,6 @@ class Mycrud extends CI_Controller
 			{
 				$options = $this->set_relation_nn[$this->filter_by];
 				$array_rel_id = $this->return_array_search_relation_nn($options,$_GET['q']);
-
-				/*
-				$i = 1;
-				$array_ids = array();
-				foreach($array_rel_id as $ids):
-
-					$array_ids[] = $ids;
-					if($i == 1)
-					{
-						$return_array_join_id .= "'".$ids."'";
-					}
-					else
-					{
-						$return_array_join_id .= ",'".$ids."'";
-					}
-
-					$i++;
-				endforeach;
-
-				$query_list = "SELECT * FROM $this->table WHERE id IN ($return_array_join_id) ";
-				$query = $this->db->query($query_list);
-
-				echo $query->num_rows();
-				exit;
-				*/
 
 				$this->db->where_in('id',$array_rel_id);
 				$query = $this->db->get($this->table);
@@ -343,7 +319,6 @@ class Mycrud extends CI_Controller
 
 		}
 
-
 		$data_total = $this->db->get();
 
 		$this->load->library('pagination');
@@ -364,8 +339,6 @@ class Mycrud extends CI_Controller
 		$this->db->select('*');
 		$this->db->from($this->table);
 
-
-
 		if(isset($_GET['filter_by']))
 		{
 			$this->filter_by = $_GET['filter_by'];
@@ -381,6 +354,7 @@ class Mycrud extends CI_Controller
 
 
 			}
+			else
 			if(array_key_exists($_GET['filter_by'],$this->set_relation_nn))
 			{
 				$options = $this->set_relation_nn[$this->filter_by];
@@ -388,16 +362,11 @@ class Mycrud extends CI_Controller
 
 				$this->db->where_in('id',$array_rel_id);
 
-
-
 			}
 			else
 			{
 				$this->db->like($_GET['filter_by'],$_GET['q'],'both');
 			}
-
-			//print_r($array_rel_id);
-			//exit;
 
 		}
 		else
@@ -443,13 +412,13 @@ class Mycrud extends CI_Controller
 			}
 			else
 			{
-				$this->db->order_by($_GET['order_by'],$_GET['sort']);
+				$this->db->order_by($this->table.".".$_GET['order_by'],$_GET['sort']);
 			}
 
 		}
 		else
 		{
-			$this->db->order_by($this->order_by[0],$this->order_by[1]);
+			$this->db->order_by($this->table.".".$this->order_by[0],$this->order_by[1]);
 		}
 
 
@@ -1250,12 +1219,20 @@ class Mycrud extends CI_Controller
 	function set_relation_field_child($field_name,$rel_table,$rel_label_field,$where = array(),$value = null)
 	{
 
-		if($value != null)
+		if(($value != null) and ($value != 0))
 		{
 			$this->db->where('id',$value);
-			$query = $this->db->get($rel_table)->row_array();
-			$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='child_".$field_name."'>";
-			$data_return .= "<option value='".$value."' selected='selected'>".$query[$rel_label_field]."</option>";
+			$query = $this->db->get($rel_table);
+
+			if($query->num_rows() > 0)
+			{
+				$query = $query->row_array();
+				$data_return = "<select name='".$field_name."' class='form-control  input-sm' id='child_".$field_name."'>";
+				$data_return .= "<option value='".$value."' selected='selected'>".$query[$rel_label_field]."</option>";
+			}
+			else {
+				$data_return = "<select name='".$field_name."' class='form-control  input-sm' disabled='disabled' id='child_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";
+			}
 		}
 		else {
 			$data_return = "<select name='".$field_name."' class='form-control  input-sm' disabled='disabled' id='child_".$field_name."'><option value=''>- Please Select ".ucfirst($rel_label_field)." -</option>";

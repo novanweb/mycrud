@@ -33,7 +33,7 @@
 
           $config['table'] = 'report';
           $config['subject'] = 'Report';
-          $config['callback_columns'] = array('created_by' => array($my,'callback_column_function'));
+          $config['callback_fields'] = array('created_by' => array($my,'callback_fields_function'));
 
           $mycrud = new Mycrud();
           $mycrud->initialize($config);

@@ -63,21 +63,15 @@
                         <div class="col-sm-3">
                            <select name="filter_by" class="form-control input-sm">
                               <?php if(count($mycrud->columns) > 0) { ?>
-                              <?php
-                                 foreach($mycrud->columns as $fields):
-
-                                 ?>
-                              <option value="<?=$fields ?>" <?php if($fields == $mycrud->filter_by) { echo "selected='selected' "; } ?>><?=$mycrud->display_alias($fields) ?></option>
-                              <?php endforeach; ?>
+                                <?php foreach($mycrud->columns as $fields): ?>
+                                  <option value="<?=$fields ?>" <?php if($fields == $mycrud->filter_by) { echo "selected='selected' "; } ?>><?=$mycrud->display_alias($fields) ?></option>
+                                <?php endforeach; ?>
                               <?php } else {?>
-                              <?php
-                                 foreach($query_field->result() as $fields):
-
-                                 ?>
-                              <?php if($fields->Key != 'PRI') { ?>
-                              <option value="<?=$fields->Field ?>" <?php if($fields->Field == $mycrud->filter_by) { echo "selected='selected' "; } ?>><?=$mycrud->display_alias($fields->Field) ?></option>
-                              <?php } ?>
-                              <?php endforeach; ?>
+                                <?php foreach($query_field->result() as $fields):?>
+                                  <?php if(($fields->Key != 'PRI') and (!in_array($fields->Field,$mycrud->disable_columns))) { ?>
+                                    <option value="<?=$fields->Field ?>" <?php if($fields->Field == $mycrud->filter_by) { echo "selected='selected' "; } ?>><?=$mycrud->display_alias($fields->Field) ?></option>
+                                  <?php } ?>
+                                <?php endforeach; ?>
                               <?php } ?>
                            </select>
                            <br/>

@@ -8,7 +8,7 @@
    <?php if($mycrud->no_load_asset_css == false) {?>
    <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
    <?php } ?>
-<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>   
+<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
 <?php if(count($mycrud->text_editor) > 0) { ?>
@@ -99,9 +99,16 @@
                                          else
                                          if(array_key_exists($fields, $mycrud->set_relation_nn))
                                          {
-
                                          	$options = $mycrud->set_relation_nn[$fields];
-                                         echo $mycrud->set_relation_nn_field($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
+                                          if(count($mycrud->set_relation_nn[$fields]) > 5)
+                                          {
+                                            $where = explode("=",$mycrud->set_relation_nn[$fields][5]);
+                                          }
+                                          else
+                                          {
+                                            $where = array();
+                                          }
+                                          echo $mycrud->set_relation_nn_field($fields,$options[0],$options[1],$options[2],$options[3],$options[4],$where);
                                          }
                                          elseif(array_key_exists($fields, $mycrud->set_relation))
                                          {
@@ -357,11 +364,19 @@
                                 <?php if(count($mycrud->set_relation_nn) > 0) {
                                    foreach($mycrud->set_relation_nn as $key=>$val) :
                                    $options = $val;
+                                   if(count($options) > 5)
+                                   {
+                                     $where = explode("=",$options[5]);
+                                   }
+                                   else
+                                   {
+                                     $where = array();
+                                   }
                                    ?>
                                 <tr>
                                    <td><strong><?=ucfirst($key)?></strong></td>
                                    <td>: </td>
-                                   <td><?=$mycrud->set_relation_nn_field($key,$options[0],$options[1],$options[2],$options[3],$options[4],$options[5]); ?></td>
+                                   <td><?=$mycrud->set_relation_nn_field($key,$options[0],$options[1],$options[2],$options[3],$options[4],$where); ?></td>
                                 </tr>
                                 <?php
                                    endforeach;
