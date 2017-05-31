@@ -9,8 +9,10 @@
    <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/bootstrap/css/bootstrap.min.css"/>
    <?php } ?>
 <link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.css"/>
+<link rel="stylesheet" href="<?=base_url()?>assets/mycrud/jquery-ui/datetimepicker-addon/jquery-ui-timepicker-addon.min.css"/>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/external/jquery/jquery.js"></script>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
+<script src="<?=base_url()?>assets/mycrud/jquery-ui/datetimepicker-addon/jquery-ui-timepicker-addon.min.js"></script>
 <?php if(count($mycrud->text_editor) > 0) { ?>
 <script type="text/javascript" src="<?=base_url() ?>assets/mycrud/ckeditor/ckeditor.js"></script>
 <?php } ?>
@@ -413,10 +415,20 @@
 <script src="<?=base_url()?>assets/mycrud/bootstrap/js/bootstrap.min.js"></script>
 <?php } ?>
 <script src="<?=base_url()?>assets/mycrud/jquery-ui/jquery-ui.js"></script>
+<script src="<?=base_url()?>assets/mycrud/jquery-ui/datetimepicker-addon/jquery-ui-timepicker-addon.min.js"></script>
 
 <script type="text/javascript">
    $( ".datepicker-date" ).datepicker({
-     dateFormat: "yy-mm-dd"
+     dateFormat: "yy-mm-dd",
+   });
+
+   $( ".datepicker-time" ).timepicker({
+     timeFormat: "HH:mm:ss"
+   });
+
+   $( ".datepicker-datetime" ).datetimepicker({
+     dateFormat: "yy-mm-dd",
+     timeFormat: "HH:mm:ss"
    });
 
 </script>

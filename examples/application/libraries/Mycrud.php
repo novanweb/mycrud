@@ -1035,7 +1035,15 @@ class Mycrud extends CI_Controller
 		}
 		elseif(strtolower($type_data) == 'date')
 		{
-			$data_return = "<input type='text' name='".$field_name."' value='".$value."' class='form-control input-sm datepicker-date' />";
+			$data_return = "<input type='text' name='".$field_name."' value='".$value."' class='form-control input-sm datepicker-date' readonly='readonly' placeholder='Click to input Date'/>";
+		}
+		elseif(strtolower($type_data) == 'datetime')
+		{
+			$data_return = "<input type='text' name='".$field_name."' value='".$value."' class='form-control input-sm datepicker-datetime' readonly='readonly' placeholder='Click to input Date & Time'/>";
+		}
+		elseif(strtolower($type_data) == 'time')
+		{
+			$data_return = "<input type='text' name='".$field_name."' value='".$value."' class='form-control input-sm datepicker-time' readonly='readonly' placeholder='Click to input Time'/>";
 		}
 		else
 		{
