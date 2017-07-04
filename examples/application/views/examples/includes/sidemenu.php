@@ -8,6 +8,7 @@
   <li class="list-group-item"><a href="<?=base_url()?>examples/set_upload_file">Set Upload File</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/set_upload_image">Set Upload Image</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/set_texteditor">Set Text Editor</a></li>
+  <li class="list-group-item"><a href="<?=base_url()?>examples/set_custom_field">Set Custom Field</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/add_action">Add Action</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/disable_action">Disable Action</a></li>
   <li class="list-group-item"><a href="<?=base_url()?>examples/where">Where Query</a></li>

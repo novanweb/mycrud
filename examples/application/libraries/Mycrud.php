@@ -59,6 +59,7 @@ class Mycrud extends CI_Controller
 	var $set_parent_dropdown = array();
 	var $set_child_dropdown = array();
 	var $set_relation_nn = array();
+	var $set_custom_field = array();
 	var $validation = array();
 
 	var $attribute = array();

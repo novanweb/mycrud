@@ -47,6 +47,11 @@ class Examples extends CI_Controller
     $this->load->view('examples/set_texteditor');
   }
 
+  function set_custom_field()
+  {
+    $this->load->view('examples/set_custom_field');
+  }
+
   function disable_action()
   {
     $this->load->view('examples/disable_action');
